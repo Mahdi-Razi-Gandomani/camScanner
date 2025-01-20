@@ -6,7 +6,8 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 
 # Load image from URL
-response = requests.get('https://i.postimg.cc/kGqWpBM3/page2.jpg')
+url = ''
+response = requests.get(url)
 image = Image.open(BytesIO(response.content))
 image = np.array(image)
 
