@@ -2,14 +2,12 @@ import cv2
 import requests
 import numpy as np
 from PIL import Image
-from io import BytesIO
 import matplotlib.pyplot as plt
 
-# Load image from URL
-url = ''
-response = requests.get(url)
-image = Image.open(BytesIO(response.content))
-image = np.array(image)
+# Load image
+image_path = 'images/input.png'
+image = Image.open(image_path) 
+image = np.array(image)  
 
 # Convert to grayscale and detect edges
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -20,23 +18,43 @@ edges = cv2.Canny(blurred, 50, 200)
 contours, _ = cv2.findContours(edges, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
 
-# Detect the outline of the paper
-for contour in contours:
-    perimeter = cv2.arcLength(contour, True)
-    approx = cv2.approxPolyDP(contour, 0.02 * perimeter, True)
-    if len(approx) == 4:
-        paper = approx
-        break
+def order_points(pts):
+    rect = np.zeros((4, 2), dtype="float32")
+    s = pts.sum(axis=1)
+    rect[0] = pts[np.argmin(s)]  # top-left
+    rect[2] = pts[np.argmax(s)]  # bottom-right
+    diff = np.diff(pts, axis=1)
+    rect[1] = pts[np.argmin(diff)]  # top-right
+    rect[3] = pts[np.argmax(diff)]  # bottom-left
+    return rect
 
-# Draw contour and reshape
-cv2.drawContours(image, [paper], -1, (0, 255, 0), 2)
-paper_points = np.reshape(paper, (4, 2))
+# Find the largest contour
+largest_contour = max(contours, key=cv2.contourArea)
+
+# Approximate the contour
+perimeter = cv2.arcLength(largest_contour, True)
+epsilon = 0.02 * perimeter
+approx = cv2.approxPolyDP(largest_contour, epsilon, True)
+
+# If not exactly 4 points, use convex hull and approximate again
+if len(approx) != 4:
+    hull = cv2.convexHull(largest_contour)
+    approx = cv2.approxPolyDP(hull, epsilon, True)
+
+# Handle error
+if len(approx) != 4:
+    raise ValueError("Cannot find a 4-point contour for the paper.")
+
+paper = order_points(approx.reshape(4, 2))
+
+
+# Draw contour
+cv2.drawContours(image, [approx], -1, (0, 255, 0), 2)
 
 # Perspective transformation
 h, w, _ = image.shape
-src_points = np.float32(paper_points)
-dst_points = np.float32([[0, 0], [0, h], [w, h], [w, 0]])
-matrix = cv2.getPerspectiveTransform(src_points, dst_points)
+dst_points = np.float32([[0, 0], [w, 0], [w, h], [0, h]])
+matrix = cv2.getPerspectiveTransform(paper, dst_points)
 warped = cv2.warpPerspective(image, matrix, (w, h))
 
 # Apply adaptive thresholding
