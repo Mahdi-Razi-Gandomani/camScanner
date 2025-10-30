@@ -4,7 +4,7 @@ This project demonstrates how to scan and preprocess a document image using Open
 
 ---
 
-### Demo
+## Demo
 
 ![Original](images/output.png)
 
