@@ -23,12 +23,26 @@ This project demonstrates how to scan and preprocess a document image using Open
 
 ---
 
-## Requirements
+## Usage
 
-To run this code, you need the following Python libraries:
+1. Place your input image in the `images/` directory (default filename: `input.png`).
 
-- `opencv-python`
-- `numpy`
-- `matplotlib`
-- `Pillow`
-- `requests`
+2. Run the script:
+
+```bash
+python document_scanner.py
+```
+
+---
+
+## Results
+
+After running the script, you should see two images:
+
+- **Original Image**: The input image with the detected document contour highlighted in green.
+- **Processed Image**: The warped, perspective-corrected, and thresholded output.
+
+### Example
+
+![Original](images/output.png)
+
