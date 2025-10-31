@@ -36,7 +36,7 @@ This project demonstrates how to scan and preprocess a document image using Open
 2. Run the script:
 
 ```bash
-python camScanner.py
+python3 camScanner.py
 ```
 
 ---
