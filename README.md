@@ -6,7 +6,7 @@ This project implements a program to scan and preprocess a document image using 
 
 ## Demo
 
-This is a demo of how this program works. The program automatically detects the outline of the document and highlights it, then after correctking the document's orientation and enhancing the text, shows the output.
+This is a demo of how this program works. The program automatically detects the outline of the document and highlights it in , then after correctking the document's orientation and enhancing the text, shows the output.
 
 ![Original](images/output.png)
 
@@ -33,6 +33,13 @@ This is a demo of how this program works. The program automatically detects the 
 
 ## Usage
 
+0. Clone or download this repository
+
+```bash
+git clone https://github.com/Mahdi-Razi-Gandomani/camScanner.git
+cd camScanner
+```
+
 1. Place your input image in the `images/` directory (default filename: `input.png`).
 
 2. Run the script:
@@ -40,12 +47,7 @@ This is a demo of how this program works. The program automatically detects the 
 ```bash
 python3 camScanner.py
 ```
-
----
-
-## Results
-
-After running the script, you should see two images:
-
-- **Original Image**: The input image with the detected document contour highlighted in green.
-- **Processed Image**: The warped, perspective-corrected, and thresholded output.
+3. After running the script, you should see two images side by side.
+   
+  - The input image with the detected document contour highlighted in green.
+  - The warped, perspective-corrected, and thresholded output.
