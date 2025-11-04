@@ -1,4 +1,4 @@
-# Document Scanning and Preprocessing
+# Document Scanning and Processing
 
 This project implements a program to scan and preprocess a document image using OpenCV. The script detects the edges of a document, performs perspective transformation to correct the document's orientation, and applies adaptive thresholding to enhance the text.
 
