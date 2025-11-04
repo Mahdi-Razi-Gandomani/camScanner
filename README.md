@@ -27,7 +27,7 @@ This is a demo of how this program works. The program automatically detects the 
   - Enhances the document's text using adaptive thresholding.
 
 - **Visualization**:
-  - Displays the original and processed images side by side.
+  - Displays the original+highlighted outline and processed images side by side.
 
 ---
 
