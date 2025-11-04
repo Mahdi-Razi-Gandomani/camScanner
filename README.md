@@ -6,6 +6,8 @@ This project implements a program to scan and preprocess a document image using 
 
 ## Demo
 
+This is the output of this program if the original image is givent to it as input.
+
 ![Original](images/output.png)
 
 ---
