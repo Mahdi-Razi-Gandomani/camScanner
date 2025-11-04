@@ -6,7 +6,7 @@ This project implements a program to scan and preprocess a document image using 
 
 ## Demo
 
-This is a demo of how this program works. The program automatically detects the outline of the document and highlights it in , then after correctking the document's orientation and enhancing the text, shows the output.
+This is a demo of how this program works. The program automatically detects the outline of the document and highlights it in green, then after correctking the document's orientation and enhancing the text, shows the output.
 
 ![Original](images/output.png)
 
