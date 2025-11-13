@@ -21,11 +21,11 @@ contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
 def order_points(pts):
     rect = np.zeros((4, 2), dtype="float32")
     s = pts.sum(axis=1)
-    rect[0] = pts[np.argmin(s)]  # top-left
-    rect[2] = pts[np.argmax(s)]  # bottom-right
+    rect[0] = pts[np.argmin(s)]  
+    rect[2] = pts[np.argmax(s)]  
     diff = np.diff(pts, axis=1)
-    rect[1] = pts[np.argmin(diff)]  # top-right
-    rect[3] = pts[np.argmax(diff)]  # bottom-left
+    rect[1] = pts[np.argmin(diff)]  
+    rect[3] = pts[np.argmax(diff)] 
     return rect
 
 # Find the largest contour
@@ -36,12 +36,11 @@ perimeter = cv2.arcLength(largest_contour, True)
 epsilon = 0.02 * perimeter
 approx = cv2.approxPolyDP(largest_contour, epsilon, True)
 
-# If not exactly 4 points, use convex hull and approximate again
+# If not exactly 4 points, approximate
 if len(approx) != 4:
     hull = cv2.convexHull(largest_contour)
     approx = cv2.approxPolyDP(hull, epsilon, True)
 
-# Handle error
 if len(approx) != 4:
     raise ValueError("Cannot find a 4-point contour for the paper.")
 
